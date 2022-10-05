@@ -1,0 +1,25 @@
+{
+  "name": "stackmate.org",
+  "version": "0.1.0",
+  "description": "Stackmate web landing content",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/StackmateNetwork/stackmate.org.git"
+  },
+  "keywords": [
+    "stackmate",
+    "web",
+    "landing",
+    "content"
+  ],
+  "author": "i5hi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StackmateNetwork/stackmate.org/issues"
+  },
+  "homepage": "https://github.com/StackmateNetwork/stackmate.org#readme"
+}
