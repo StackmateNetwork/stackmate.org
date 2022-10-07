@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  node:
+    build:
+      context: ../../app
+      dockerfile: Dockerfile.dev
+    image: stackmate-node-ts
+    container_name: sm8-website
+    restart: unless-stopped
+    environment:
+      - APP_PORT=1111
+    ports:
+      - "1111:1111"
+    volumes:
+      - sm8-server-code:/home/node/stackmate.org/app
+      - sm8-server-keys:/home/node/.keys
+    networks:
+      - stackmatenetwork
+
+  nginx:
+    build:
+      context: ../../infra/nginx
+      dockerfile: Dockerfile.dev
+    image: stackmate-nginx
+    container_name: sm8-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - sm8-web-root:/var/www/html
+      - ../../infra/nginx/dev/nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - node
+    networks:
+      - stackmatenetwork
+
+volumes:
+  sm8-server-code:
+    driver: local
+    driver_opts:
+      type: none
+      device: $REPO
+      o: bind
+  sm8-server-keys:
+    driver: local
+    driver_opts:
+      type: none
+      device: $KEYS
+      o: bind
+  sm8-server-logs:
+  sm8-datadb:
+  sm8-configdb:
+  sm8-web-root:
+
+networks:
+  stackmatenetwork:
+    driver: bridge
