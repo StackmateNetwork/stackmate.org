@@ -20,11 +20,12 @@ if [[ "$VOLUMES_PARENT_DIR" == */ ]]; then
 fi
 
 NODE_VOLUME="$VOLUMES_PARENT_DIR/node"
+KEYS_VOLUME="$NODE_VOLUME/.keys"
 CERTS_VOLUME="$VOLUMES_PARENT_DIR/certs"
 CERTBOTETC_VOLUME="$CERTS_VOLUME/certbot/etc"
 CERTBOTVAR_VOLUME="$CERTS_VOLUME/certbot/var"
 
-mkdir -p "$NODE_VOLUME/.keys" 2> /dev/null
+mkdir -p "$KEYS_VOLUME" 2> /dev/null
 mkdir -p "$NODE_VOLUME/winston" 2> /dev/null
 mkdir -p "$MONGO_VOLUME/data/db" 2> /dev/null
 mkdir -p "$MONGO_VOLUME/configdb" 2> /dev/null
@@ -42,22 +43,9 @@ else
   echo "[*] DHParam setup for nginx server."
 fi
 
-if [[ $TYPE == *"priv"* ]] || [[ $TYPE == *"PRIV"* ]] ; then
-  if [[ $(uname) == "Darwin" ]]; then
-    SECRET=$(echo $RANDOM | md5 );
-  else
-    SECRET=$(echo $RANDOM | md5sum |  cut -d' ' -f1);
-  fi
-  echo "[*] Setting up as a private server."
-  echo "[!] Use the following secret to invite members to your cypherpost server: $SECRET"
-else
-  TYPE="public"
-  SECRET="public"
-  echo "[*] Setting up as public server."
-fi
 
-sudo openssl genrsa -out $NODE_VOLUME/.keys/sats_sig.pem 4096
-sudo openssl rsa -in $NODE_VOLUME/.keys/sats_sig.pem -outform PEM -pubout -out $NODE_VOLUME/.keys/sats_sig.pub
+sudo openssl genrsa -out $KEYS_VOLUME/sats_sig.pem 4096
+sudo openssl rsa -in $KEYS_VOLUME/sats_sig.pem -outform PEM -pubout -out $KEYS_VOLUME/sats_sig.pub
 echo "[!] Giving node container GUI 1300 permission to use response signing keys."
 # sudo chown -R $(whoami):1300 $NODE_VOLUME
 # sudo chmod -R 770 $NODE_VOLUME
@@ -78,7 +66,7 @@ echo "[*] Created nginx pre & post conf files with $MY_DOMAIN_NAME as hostname."
 touch .env
 echo "COMPOSE_PROJECT_NAME=stackmate-production" >> .env
 echo "REPO=$REPO/app" > .env
-echo "KEYS=$HOME/.keys" >> .env
+echo "KEYS=$KEYS_VOLUME" >> .env
 echo "NODE_VOLUME=$NODE_VOLUME" >> .env
 echo "CERTS_VOLUME=$CERTS_VOLUME" >> .env
 

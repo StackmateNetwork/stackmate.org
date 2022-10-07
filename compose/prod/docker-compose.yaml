@@ -4,7 +4,7 @@ services:
   node:
     build:
       context: ../../app
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.main
     image: stackmate-node-ts
     container_name: sm8-website
     restart: unless-stopped
@@ -51,29 +51,17 @@ services:
       - stackmatenetwork
 
 volumes:
-  cp-server-keys:
+  sm8-server-keys:
     driver: local
     driver_opts:
       type: none
       device: $NODE_VOLUME/.keys
       o: bind
-  cp-server-logs:
+  sm8-server-logs:
     driver: local
     driver_opts:
       type: none
       device: $NODE_VOLUME/winston
-      o: bind
-  cp-datadb:
-    driver: local
-    driver_opts:
-      type: none
-      device: $MONGO_VOLUME/data/db
-      o: bind
-  cp-configdb:
-    driver: local
-    driver_opts:
-      type: none
-      device: $MONGO_VOLUME/configdb
       o: bind
   web-root:
   certbot-etc:
