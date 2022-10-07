@@ -1,0 +1,25 @@
+FROM node:14.5.0-buster
+
+USER root
+ENV USER_ID=1300
+RUN usermod -u $USER_ID node
+RUN mkdir -p /home/node/stackmate.org/app
+RUN mkdir -p /home/node/winston && mkdir /home/node/.keys
+RUN chown -R node /home/node/stackmate.org/app /home/node/.keys
+RUN npm install -g typescript mocha ts-node
+
+USER node
+WORKDIR /home/node/stackmate.org/app
+COPY --chown=node:node package*.json ./
+RUN npm install
+COPY --chown=node:node . .
+RUN tsc
+
+ENV MOLTRES_PORT="1111"
+ENV KEY_PATH="/home/node/.keys/"
+#------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------
+VOLUME ["/home/node/.keys","/home/node/winston"]
+EXPOSE $APP_PORT
+CMD ["npm", "start"]
+#------------------------------------------------------------------------------------

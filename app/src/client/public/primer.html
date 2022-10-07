@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta property="og:site_name" content="stackmate">
+  <meta property="og:description" content="A swiss army knife for bitcoin.">
+  <meta property="og:image" itemprop="image" content="/img/owl.png">
+  <meta property="og:type" content="website">
+  <title>Stackmate</title>
+  <!-- Font Awesome -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+  rel="stylesheet"
+  />  
+
+
+  <link rel="shortcut icon" type="image/png" href="/img/stackmate.png" />
+  <link rel="stylesheet" type='text/css' href="/css/mdb.min.css" />
+  <link rel="stylesheet" type='text/css' href="/css/dark.css" />
+
+</head>
+
+<body>
+
+  <header>
+
+
+  </header>
+
+  <style>
+
+  </style>
+
+  <br>
+
+  <main>
+
+    <div class="container">
+      <div class="row">
+        <div class="outline col-6">
+            <a href="/">
+                <img class="sats-ico" loading="lazy" src='/img/stackmate.png' href="https://stackmate.org">
+              </a>
+        </div>
+        <div class="outline rightme col-6">
+          <a href="/primer">
+            <div>
+              LEARN
+            </div>
+          </a>
+      </div>
+      </div>
+      <br>
+      <br>
+
+      <div class="container">
+            <h1>LEARN</h1>
+            <h6>Stackmate Bitcoin Primer</h6>
+            <br>
+            
+            <h6 class="yellow-color">DETERMINISTIC ENTROPY</h6><i class="fas fa-atom"></i>
+            <p>Imagine a space, as vast as the universe. Entropy is a means of arriving at a unique point within this space through randomness. It is near impossible for two individuals to appear at the same point, given a strong source of entropy. Given the same source entropy, we always arrive at the same point - deterministically. This point in space, is unique to you and only you know the way to get here. This is your bitcoin seed - a point in the infinite space of big numbers (close to infinity) that only you know how to arrive at. A safe and reliable space to build and store your value.</p>
+            <hr>
+            <h6 class="yellow-color">12/24 Mnemonic Seed Words</h6>
+            <i class="fas fa-key"></i>
+            <p>BIP-39 was a proposal made to simplify the means of memorizing and storing strong entropy as a source to your Bitcoin wallet.</p>
+            <p>You might think 12/24 words from a list of 2048 words would be pretty simple to guess, that would be to understimate the power of exponential mathematics.</p>
+            <p>2048^12 is equal to 5,444,517,870,735,015,415,413,993,718,908,291,383,296 combinations.</p>
+            <p>2048^24 is equal to 29,642,774,844,752,946,028,434,172,162,224,104,410,437,116,074,403,984,394,101,141,506,025,761,187,823,616 combinations.</p>
+            <p>To put this into some context, assume your computer can compute 1 billion seeds per second (which is very optimistic), it would take 19,674,289 years to attempt every possible combination of 24 words.</p>
+            <p>As technology advances, so will the protocol. If computation power begins to see massive leaps, we can always add another 2048 words to the word list, OR increase the number of words in our seed to 36 or 48.</p>
+            <p>We recommend using 24 word mnemonic seed phrases.</p>
+            <p>You can optionally add a passphrase for even more entropy, however, we do not recommend beginners to do so.</p>
+            <p>ALWAYS write down your seed (on stainless steel preferably) and store them as your most valuable secret.</p>
+            <p>You can recover your wallet on any device using these words.</p>
+            <p>Additionally, use techniques like the Memory Palace to memorize your seed, and meditate on it everyday to commit it to memory.</p>
+            <hr>
+            <h6 class="yellow-color">One seed to rule them all.</h6>
+            <i class="fas fa-brain"></i>
+            <p>NOW, for the neat part. From a single seed, an infinite number of keys can be deterministically generated!</p>
+            <p>The benefit of this is that from your single seed, you can generate strong keys that can secure your entire digital life (passwords,access tokens,keys), which can all be deterministically retrived from your seed.</p>
+            <p>The role of your Bitcoin wallet is to use your single source of entropy and deterministically derive and manage extended keys (as a keychain) to allow you to engage in various transactions safely and privately.</p>
+            <hr>
+            <hr>
+
+            <h6 class="cold-color">PUBLIC KEY AS IDENTITY</h6><i class="fas fa-fingerprint"></i>
+            <p>Corresponding to your secret/private key is a public key. This acts as your identity. You can share it with your peers and prove via signature that you are the owner of the corresponding private key.</p>
+            <p>In Bitcoin, public keys are converted into addresses, to which others can make payments, and which you can spend by providing a signature to the network.</p>
+            <p>Every new address is a new key, deterministically created from your seed.</p>
+            <p>It is a standard good privacy practice to always use a new address for every payment. This makes it hard for others to know the exact balance of your entire wallet.</p>
+            <p>Similarly, in e2ee communications, it is standard good practice to encrypt every message with a new key.</p>
+            <hr>
+            <hr>
+
+            <h6 class="stackmate-color">ROLE OF NODES</h6><i class="fas fa-globe"></i>
+            <p>The ledger of all transactions are maintained by full nodes. They enforce the rules of the network, broadcast transactions to miners, validate their work, and add new blocks to the ledger.</p>
+            <p>To know your history/balance and broadcast transactions, you need to communicate with a full node.</p>
+            <p>Several public nodes exist that serve wallets - however, they come at a cost of privacy (specifically, IP Address Fingerprinting).</p>
+            <p>When syncing your wallet with a node, you send them your public key and they extract all transactions related to it from their copy of the ledger. This essentially gives a node your entire wallet history.</p>
+            <p>A node will only be able to identify you by your IP address, so using a VPN and/or Tor is the only requirement to maintain privacy while communicating with a node.</p>
+            <p>Running your own node gives you the benefit of not relying on another node to be available, not having your wallet tracked, and not having your requests censored. Additionally, by running a node, you are taking active part in consensus and maintaining decentralization of your monetary network.</p>
+            <hr>
+            <hr>
+            <h6 class="cypherpost-color">CYPHERPOST</h6><i class="fas fa-signature"></i>
+            <p>Cypherpost is an e2ee social networking platform.</p>
+            <p>Cypherpost is a self-hosted service that uses your bitcoin public key as your identification, and a signature from your private key as authentication.</p>
+            <p>It facilitates end-to-end encrypted message relaying (posts) and supports fixed public claims about other users to be made with a provable signature (announcements/badges). A public reputation system along with private communications can facilitate building webs of trust.</p>
+            <p>In combination with a Bitcoin wallet, we can begin to engage in financial contracts with our trusted peers.</p>
+            <p>If you know a cypherpost server admin, you can get an invite code from them to join their network OR you can very easily spin up your own server and be a host for your friends, family, community or business.</p>
+            
+            <hr>
+            <hr>
+
+         
+      </div>
+    </div>
+
+  </main>
+  <!-- Footer -->
+  <footer class="page-footer font-small teal pt-4">
+
+    <!-- Footer Text -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">
+
+        <a href="https://stackmate.org">stackmate.org</a> 2022
+        <br>
+        <br>
+
+        <a href="https://github.com/StackmateNetwork"><i class="fab fa-github fa-3x cold-color"></i></a>
+        <a href="https://toma.tech"><i class="fas fa-radiation fa-3x"></i></a>
+        <a href="https://github.com/bitcoin/bitcoin"><i class="fab fa-bitcoin fa-3x yellow-color"></i></a>
+        <br>
+
+      </div>
+
+    <!-- MDB -->
+    
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+
+    </div>
+
+  </footer>
+
+</body>
+
+<br>
+
+<div class="end-line"></div>
+
+</html>

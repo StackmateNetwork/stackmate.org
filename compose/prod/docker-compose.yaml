@@ -1,0 +1,100 @@
+version: '3.7'
+
+services:
+  node:
+    build:
+      context: ../../app
+      dockerfile: Dockerfile.dev
+    image: stackmate-node-ts
+    container_name: sm8-website
+    restart: unless-stopped
+    environment:
+      - APP_PORT=1111
+    ports:
+      - "1111:1111"
+    volumes:
+      - sm8-server-logs:/home/node/winston
+      - sm8-server-keys:/home/node/.keys
+    networks:
+      - stackmatenetwork
+
+  nginx:
+    build:
+      context: ../../infra/nginx
+      dockerfile: Dockerfile
+    image: stackmate-nginx
+    container_name: sm8-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ../../infra/nginx/prod/nginx-conf:/etc/nginx/conf.d
+      - dhparam:/etc/ssl/certs
+    networks:
+      - stackmatenetwork
+
+  certbot:
+    image: certbot/certbot
+    container_name: certificate-authority
+    volumes:
+      - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/html --email i5hi@proton.me --agree-tos --no-eff-email --dry-run -d stackmate.org
+    networks:
+      - stackmatenetwork
+
+volumes:
+  cp-server-keys:
+    driver: local
+    driver_opts:
+      type: none
+      device: $NODE_VOLUME/.keys
+      o: bind
+  cp-server-logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: $NODE_VOLUME/winston
+      o: bind
+  cp-datadb:
+    driver: local
+    driver_opts:
+      type: none
+      device: $MONGO_VOLUME/data/db
+      o: bind
+  cp-configdb:
+    driver: local
+    driver_opts:
+      type: none
+      device: $MONGO_VOLUME/configdb
+      o: bind
+  web-root:
+  certbot-etc:
+    driver: local
+    driver_opts:
+      type: none
+      device: $CERTS_VOLUME/certbot/etc
+      o: bind
+  certbot-var:
+    driver: local
+    driver_opts:
+      type: none
+      device: $CERTS_VOLUME/certbot/var
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: $CERTS_VOLUME
+      o: bind
+
+networks:
+  stackmatenetwork:
+    driver: bridge
